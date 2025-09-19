@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from openai import OpenAI
 from pinecone import Pinecone
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 # Load environment variables
 from dotenv import load_dotenv
@@ -13,7 +14,13 @@ pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 index = pc.Index("courses-data")
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://fes-website-chatbot-proto.onrender.com"],  # Replace "*" with your frontend URL in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 class SearchRequest(BaseModel):
     query: str
     answers: dict
