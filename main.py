@@ -57,7 +57,7 @@ async def search_courses(req: SearchRequest):
 
     print(f"📥 Pinecone filter being sent: {pinecone_filter}")
 
-    # Query Pinecone with filters first
+    #wuery with filters first
     results = index.query(
         vector=embedding,
         top_k=req.top_k,
@@ -77,7 +77,7 @@ async def search_courses(req: SearchRequest):
     print(f"📤 Raw matches from Pinecone: {len(results['matches'])}")
     print(f"📤 Matches after parsing: {len(matches)}")
 
-    # 🔥 Fallback: if no matches, retry without filters
+    
     if not matches:
         print("⚠️ No matches with filters — retrying without filters...")
         results = index.query(
